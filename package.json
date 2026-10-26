@@ -1,5 +1,6 @@
 {
   "name": "roomtrack-web",
+  "description": "A React frontend for the RoomTrack API, built with TypeScript and Vite.",
   "private": true,
   "version": "0.0.0",
   "type": "module",
