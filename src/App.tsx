@@ -1,5 +1,6 @@
 import { Routes, Route, Navigate } from "react-router";
 
+import ProtectedRoute from "./auth/ProtectedRoute";
 import DashboardPage from "./pages/DashboardPage";
 import LoginPage from "./pages/LoginPage";
 import MePage from "./pages/MePage";
@@ -9,13 +10,14 @@ import "./App.css";
 function App() {
   return (
     <Routes>
-      <Route
-        path="/"
-        element={<Navigate to="/dashboard" replace />}
-      />
       <Route path="/login" element={<LoginPage />} />
-      <Route path="/dashboard" element={<DashboardPage />} />
-      <Route path="/me" element={<MePage />} />
+
+      {/* These pages require an authenticated session. */}
+      <Route element={<ProtectedRoute />}>
+        <Route path="/" element={<Navigate to="/dashboard" replace />} />
+        <Route path="/dashboard" element={<DashboardPage />} />
+        <Route path="/me" element={<MePage />} />
+      </Route>
     </Routes>
   );
 }
