@@ -33,7 +33,7 @@ function DashboardPage() {
 
     async function loadRooms() {
       try {
-        const response = await fetch("/rooms");
+        const response = await fetch("/api/rooms");
 
         if (response.status === 401) {
           // The session has expired; update shared authentication state.

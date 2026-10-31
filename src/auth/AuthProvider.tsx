@@ -7,7 +7,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
 
   async function refreshAuth(): Promise<boolean> {
-    const response = await fetch("/auth/me");
+    const response = await fetch("/api/auth/me");
 
     if (response.ok) {
       const result: { data: User } = await response.json();
@@ -33,7 +33,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     async function checkSession() {
       try {
-        const response = await fetch("/auth/me");
+        const response = await fetch("/api/auth/me");
 
         if (ignore) return;
 

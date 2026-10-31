@@ -51,7 +51,7 @@ function RoomPage() {
 
     async function loadRoom() {
       try {
-        const response = await fetch(`/rooms/${roomId}`);
+        const response = await fetch(`/api/rooms/${roomId}`);
 
         if (response.status === 401) {
           // Recheck the session so ProtectedRoute can redirect to login.
@@ -104,7 +104,7 @@ function RoomPage() {
 
     try {
       const response = await fetch(
-        `/rooms/${roomId}/assets/${selectedAsset.id}`,
+        `/api/rooms/${roomId}/assets/${selectedAsset.id}`,
         {
           method: "PATCH",
           headers: {
@@ -126,7 +126,7 @@ function RoomPage() {
       // The asset is saved, even if the following refresh fails.
       saved = true;
 
-      const roomResponse = await fetch(`/rooms/${roomId}`);
+      const roomResponse = await fetch(`/api/rooms/${roomId}`);
 
       if (roomResponse.status === 401) {
         await refreshAuth();
