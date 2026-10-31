@@ -1,6 +1,13 @@
 import { createContext, useContext } from "react";
 
+export type User = {
+  id: number;
+  username: string;
+  role: string;
+};
+
 export type AuthContextValue = {
+  user: User | null;
   isAuthenticated: boolean;
   isLoading: boolean;
   refreshAuth: () => Promise<boolean>;

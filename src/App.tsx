@@ -1,5 +1,7 @@
 import { Routes, Route, Navigate } from "react-router";
 
+import AppLayout from "./components/AppLayout";
+
 import ProtectedRoute from "./auth/ProtectedRoute";
 import DashboardPage from "./pages/DashboardPage";
 import LoginPage from "./pages/LoginPage";
@@ -15,10 +17,12 @@ function App() {
 
       {/* These pages require an authenticated session. */}
       <Route element={<ProtectedRoute />}>
-        <Route path="/" element={<Navigate to="/dashboard" replace />} />
-        <Route path="/dashboard" element={<DashboardPage />} />
-        <Route path="/rooms/:roomId" element={<RoomPage />} />
-        <Route path="/me" element={<MePage />} />
+        <Route element={<AppLayout />}>
+          <Route path="/" element={<Navigate to="/dashboard" replace />} />
+          <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/rooms/:roomId" element={<RoomPage />} />
+          <Route path="/me" element={<MePage />} />
+        </Route>
       </Route>
     </Routes>
   );

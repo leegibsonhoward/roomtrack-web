@@ -41,37 +41,42 @@ const { refreshAuth } = useAuth();
   }
 
   return (
-    <main>
-      <h1>Login</h1>
+  <main className="login-page">
+    <section className="login-card">
+      <h1>RoomTrack</h1>
+      <p>Sign in to your account</p>
 
-      <form onSubmit={handleSubmit}>
-        <div>
+      <form onSubmit={handleSubmit} className="login-form">
+        <div className="form-field">
           <label htmlFor="username">Username</label>
           <input
             id="username"
+            autoComplete="username"
             value={username}
             onChange={(event) => setUsername(event.target.value)}
             required
           />
         </div>
 
-        <div>
+        <div className="form-field">
           <label htmlFor="password">Password</label>
           <input
             id="password"
             type="password"
+            autoComplete="current-password"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
             required
           />
         </div>
 
-        <button type="submit">Login</button>
+        <button type="submit">Sign In</button>
       </form>
 
-      <p role="status">{message}</p>
-    </main>
-  );
+      {message && <p role="status">{message}</p>}
+    </section>
+  </main>
+);
 }
 
 export default LoginPage;

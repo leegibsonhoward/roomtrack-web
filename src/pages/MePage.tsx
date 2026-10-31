@@ -4,7 +4,7 @@ import { useAuth } from "../auth/AuthContext";
 
 function MePage() {
   const navigate = useNavigate();
-  const { refreshAuth } = useAuth();
+  const { user, refreshAuth } = useAuth();
   const [error, setError] = useState("");
   const [isLoggingOut, setIsLoggingOut] = useState(false);
 
@@ -33,15 +33,32 @@ function MePage() {
   }
 
   return (
-    <main>
-      <h1>My Account</h1>
-      <p>View your account information.</p>
+    <main className="account-page">
+      <section className="account-card">
+        <h1>My Account</h1>
 
-      <button onClick={handleLogout} disabled={isLoggingOut}>
-        {isLoggingOut ? "Logging out..." : "Logout"}
-      </button>
+        <div className="account-info">
+          <div className="account-avatar" aria-hidden="true">
+            {user?.username.charAt(0).toUpperCase()}
+          </div>
 
-      {error && <p role="alert">{error}</p>}
+          <div>
+            <strong>{user?.username}</strong>
+            <p>role: {user?.role}</p>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          className="logout-button"
+          onClick={handleLogout}
+          disabled={isLoggingOut}
+        >
+          {isLoggingOut ? "Logging out..." : "Log Out"}
+        </button>
+
+        {error && <p role="alert">{error}</p>}
+      </section>
     </main>
   );
 }

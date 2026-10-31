@@ -1,19 +1,25 @@
 import { useEffect, useState, type ReactNode } from "react";
-import { AuthContext } from "./AuthContext";
+import { AuthContext, type User } from "./AuthContext";
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [user, setUser] = useState<User | null>(null);
 
   async function refreshAuth(): Promise<boolean> {
     const response = await fetch("/auth/me");
 
     if (response.ok) {
+      const result: { data: User } = await response.json();
+
+      setUser(result.data);
       setIsAuthenticated(true);
       return true;
     }
 
     if (response.status === 401) {
+      setUser(null);
+
       setIsAuthenticated(false);
       return false;
     }
@@ -32,8 +38,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         if (ignore) return;
 
         if (response.ok) {
-          setIsAuthenticated(true);
+          const result: { data: User } = await response.json();
+
+          if (!ignore) {
+            // Store the user returned by the API.
+            setUser(result.data);
+            setIsAuthenticated(true);
+          }
         } else if (response.status === 401) {
+          // Clear the user when the session is no longer valid.
+          setUser(null);
           setIsAuthenticated(false);
         }
       } catch {
@@ -56,7 +70,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, isLoading, refreshAuth }}
+      value={{ user, isAuthenticated, isLoading, refreshAuth }}
     >
       {children}
     </AuthContext.Provider>
