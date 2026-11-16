@@ -99,24 +99,27 @@ function DashboardPage() {
           </section>
 
           <h2>Rooms</h2>
+          {rooms.length === 0 ? (
+            <p>No rooms available.</p>
+          ) : (
+            <ul className="room-list">
+              {rooms.map(room => (
+                <li key={room.id}>
+                  <Link to={`/rooms/${room.id}`} className="room-link">
+                    <span>Room {room.number}</span>
 
-          <ul className="room-list">
-            {rooms.map(room => (
-              <li key={room.id}>
-                <Link to={`/rooms/${room.id}`} className="room-link">
-                  <span>Room {room.number}</span>
-
-                  <span
-                    className={`room-status ${
-                      room.isComplete ? "status-complete" : "status-attention"
-                    }`}
-                  >
-                    {room.isComplete ? "Complete" : "Needs Attention"}
-                  </span>
-                </Link>
-              </li>
-            ))}
-          </ul>
+                    <span
+                      className={`room-status ${
+                        room.isComplete ? "status-complete" : "status-attention"
+                      }`}
+                    >
+                      {room.isComplete ? "Complete" : "Needs Attention"}
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          )}
         </>
       )}
     </main>

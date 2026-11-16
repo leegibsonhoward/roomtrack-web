@@ -59,8 +59,12 @@ function RoomPage() {
           return;
         }
 
+        if (response.status === 404) {
+          throw new Error("Room not found.");
+        }
+
         if (!response.ok) {
-          throw new Error("Unable to retrieve room.");
+          throw new Error("Unable to load room.");
         }
 
         const result: RoomResponse = await response.json();
@@ -68,9 +72,11 @@ function RoomPage() {
         if (!ignore) {
           setRoom(result.data);
         }
-      } catch {
+      } catch (error) {
         if (!ignore) {
-          setError("Unable to load room.");
+          setError(
+            error instanceof Error ? error.message : "Unable to load room.",
+          );
         }
       } finally {
         if (!ignore) {
